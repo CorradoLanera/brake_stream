@@ -6,13 +6,60 @@ output: github_document
 
 This repo reports two minimal reproducible examples for two linked issues I have encountered w/ shiny development to control video recording from a USB webcam.
 
-You can run the application by calling one of the following lines of code accordingly to what you would like to see.
+You can run the application by calling one of the following snippets accordingly to what you would like to see.
 
 ```{r, eval=FALSE}
+#| eval = FALSE
+
 # install.package("shiny")
-shiny::runGitHub("break_stream", "CorradoLanera", subdir = "break_loop")
-shiny::runGitHub("break_stream", "CorradoLanera", subdir = "release_stream")
+
+## "brake the loop" app: a button starting an infinite loop interrupted
+## by the click on a stop button.
+shiny::runGitHub(
+  repo = "break_stream",
+  username = "CorradoLanera",
+  subdir = "break_loop"
+)
+
+## "release the stream" app: click start to start an `{Rvision}` strem,
+## and click stop to releas it. reactive or observer for an external
+## pointer?! We need immediate side-effect (observer) with a returned 
+## value (the pointer: reactive). Release exiting the starting chunk 
+## (from the stop click) or releasing from the stop chunk?!
+## 
+## My current solution: superassign the pointer into the global
+## environment from within the observer start chunk, releasing it from
+## within the observer stop chunk. VERY ugly!
+shiny::runGitHub(
+  repo = "break_stream",
+  username = "CorradoLanera",
+  subdir = "release_stream"
+)
 ```
+
+
+### UPDATE: solved loop
+
+After looking at https://blog.fellstat.com/?p=407 (last access: 2022-08-27), I have found a very beautiful solution/workaraund based on `{future}` and status text temporary file written on disk. I don't know if there is a more _shiny_ solution; if so, you are more than very welcome to file a pull request! Similarly, if you find some issue with that solution, you can file an issue (or a pull request ;-))!
+
+You can find the solution in the branch `loop`, and you can run the corresponding application executing the following snippet.
+
+```{r}
+#| eval = FALSE
+
+# install.packages("shiny")
+
+## "brake the loop" app: a button starting an infinite loop interrupted
+## by the click on a stop button.
+shiny::runGitHub(
+  repo = "break_stream",
+  username = "CorradoLanera",
+  ref = "loop",
+  subdir = "break_loop"
+)
+```
+
+
 
 ## TL;DR
 
@@ -38,3 +85,9 @@ So in the release_stream example, we have two cases:
 To record a video, we need to store inside it a stream of images indefinitely or up to the moment we push _stop_. But, R is a single process, and if shiny use it to evaluate the code inside the observer triggered by the start button... how can we signal to it that we even have pressed the stop button?
 
 > I do not have found a solution nor a workaround to that.
+
+
+## Code of Conduct
+
+Please note that the break_stream project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+

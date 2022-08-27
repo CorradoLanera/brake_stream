@@ -123,6 +123,14 @@
         "glue"
       ]
     },
+    "codetools": {
+      "Package": "codetools",
+      "Version": "0.2-18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "019388fc48e48b3da0d3a76ff94608a8",
+      "Requirements": []
+    },
     "commonmark": {
       "Package": "commonmark",
       "Version": "1.8.0",
@@ -203,6 +211,29 @@
       "Repository": "CRAN",
       "Hash": "7c89603d81793f0d5486d91ab1fc6f1d",
       "Requirements": []
+    },
+    "future": {
+      "Package": "future",
+      "Version": "1.27.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "f6811da7bee83f2cef50ee3d21c5c794",
+      "Requirements": [
+        "digest",
+        "globals",
+        "listenv",
+        "parallelly"
+      ]
+    },
+    "globals": {
+      "Package": "globals",
+      "Version": "0.16.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2fb246aa501a4fa799448f3984b0c5c1",
+      "Requirements": [
+        "codetools"
+      ]
     },
     "glue": {
       "Package": "glue",
@@ -302,6 +333,14 @@
         "rlang"
       ]
     },
+    "listenv": {
+      "Package": "listenv",
+      "Version": "0.8.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "0bde42ee282efb18c7c4e63822f5b4f7",
+      "Requirements": []
+    },
     "magrittr": {
       "Package": "magrittr",
       "Version": "2.0.3",
@@ -327,6 +366,14 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "18e9c28c1d3ca1560ce30658b22ce104",
+      "Requirements": []
+    },
+    "parallelly": {
+      "Package": "parallelly",
+      "Version": "1.32.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "9e3d8d65cb9c5ca5966340a6bfec60b2",
       "Requirements": []
     },
     "pbapply": {
