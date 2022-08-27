@@ -24,6 +24,7 @@ server <- function(input, output) {
     function() {
       message("Final status: ", get_status())
       if (fs::file_exists(status_file)) unlink(status_file)
+      plan(sequential)
     }
   })
 
@@ -59,6 +60,14 @@ server <- function(input, output) {
       stringr::str_to_lower(get_status()),
       stringr::str_to_lower(status)
     )
+  }
+
+  print_progress <- function(i) {
+    if (i %% 50 == 0) {
+      cat(i, "\n")
+    } else if (i %% 10 == 0) {
+      cat("X")
+    } else cat(".")
   }
 
   fire_ready()
@@ -99,10 +108,15 @@ server <- function(input, output) {
     message("Cycle started.")
 
     res <- future({
+      i <- 1
       while (TRUE) {
-        print("Cycling")
-        Sys.sleep(1)
-        if (is_status("interrupted")) break
+        print_progress(i)
+        Sys.sleep(0.2)
+
+        if (is_status("interrupt")) break
+
+        fire_running(round(1 - 1/i, 2 + log10(i)) * 100)
+        i <- i + 1
       }
       message("Cycle interrupted!")
     })
@@ -141,7 +155,7 @@ server <- function(input, output) {
       return(NULL)
     }
 
-    if (is_status("interrupted")) {
+    if (is_status("interrupt")) {
       showNotification(
         "Already interrupted.
          You cannot interrupt a not running cycle...
